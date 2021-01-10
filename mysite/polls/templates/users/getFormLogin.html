@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <form action="{% url 'postLoginForm' %}" method="POST" id="formLogin">
+        {% csrf_token %}
+        username: <input type="text" name="user" id="user"><br>
+        password: <input type="password" name="pass" id="pass"><br>
+        <input type="submit" name="submit" value="Login">
+    </form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        checkBeforeSubmit();
+        function checkBeforeSubmit(){
+            $('#formLogin').on("submit", function(){
+                let user = $('#user').val();
+                let pass = $('#pass').val();
+                if(user == "" || pass == "")
+                {
+                    alert("Ban can nhap day du thong tin");
+                    return false;
+                }
+                else
+                {
+                    $(this).submit();
+                }
+            });
+        }
+    });
+</script>
+</html>

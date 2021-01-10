@@ -1,0 +1,7 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+    {% for item in list_question %}
+        <li>{{ item.question_text }}</li>
+    {% endfor %}
+{% endblock %}

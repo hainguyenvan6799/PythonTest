@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Index</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container bg-light">
+    <div class="header">
+        <h1 class="text-center text-danger">Xin chao trang chu</h1>
+        <a href="getFormLogin/">Login</a>
+    </div>
+
+    <h2 class="text-center">Author List</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Birthday</th>
+            <th>Address</th>
+            <th>Telephone</th>
+        </tr>
+        {% for author in list_authors %}
+            <tr>
+                <td>{{ author.Email }}</td>
+                <td><button class="btn btn-primary showBook" author_id="{{ author.id }}">{{ author.Name }}</button></td>
+
+                <td>{{ author.Birthday }}</td>
+                <td>{{ author.Address }}</td>
+                <td>{{ author.Telephone }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Click Author's Name to see books</h2>
+    <div id="listBook">
+
+    </div>
+
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.showBook').on('click', function(e){
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            event.preventDefault();
+            let author_id = $(this).attr('author_id');
+
+            $.ajax({
+                url:"showBookOfAuthor/",
+                type:"POST",
+                data: {id:author_id},
+                success: function(data){
+                    $('#listBook').html(data);
+
+                }
+            });
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,7 @@
+<h1>List book of author</h1>
+{% for a in authors.book_set.all %}
+    <h1>Author: {{ authors.Name }}</h1>
+    <h2>Book's Title: {{ a.Title }}</h2>
+    <h2>Book's Name: {{ a.Name }}</h2>
+    <p>Created: {{ a.Created }}</p>
+{% endfor %}

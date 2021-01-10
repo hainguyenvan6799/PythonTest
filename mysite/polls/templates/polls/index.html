@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% extends 'polls/base.html' %}
+
+    {% block content %}
+        <h1>Đây la template</h1>
+        <p>Xin chào mình tên là {{ name }}</p>
+        {% for item in taisan %}
+            {% if item != 'Máy tính' %}
+                <li>{{ item }}</li>
+            {% endif %}
+        {% endfor %}
+    {% endblock %}
+</body>
+</html>
